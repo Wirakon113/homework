@@ -131,11 +131,40 @@
             echo "<h2>ผลลัพธ์ BMI</h2>";
             echo "<p><strong>ชื่อ-นามสกุล:</strong> $firstname $lastname</p>";
             echo "<p><strong>อายุ:</strong> $age ปี</p>";
-            echo "<p><strong>BMI:</strong> $bmi ($category)</p>";
-            echo "<p><strong>คำแนะนำ:</strong> $advice</p>";
+            $bmi = BMIcal($height , $weight);
+            BMIresule($bmi);
             echo "</div>";
         }
         ?>
     </div>
+    <?php 
+
+        function BMIcal($height , $weight){
+            $heightInMeters = $height / 100;
+            $bmi = $weight / ($heightInMeters * $heightInMeters);
+            $bmi = round($bmi, 2);
+            return $bmi;
+        }
+        
+
+        function BMIresule($bmi){
+            if ($bmi < 18.5) {
+                $category = "น้ำหนักน้อยเกินไป";
+                $advice = "คุณควรกินอาหารที่มีสารอาหารครบถ้วนเพื่อเพิ่มน้ำหนัก.";
+            } elseif ($bmi < 24.9) {
+                $category = "น้ำหนักปกติ";
+                $advice = "ยอดเยี่ยม! รักษารูปร่างและสุขภาพให้ดีต่อไป.";
+            } elseif ($bmi < 29.9) {
+                $category = "น้ำหนักเกิน";
+                $advice = "คุณควรเริ่มออกกำลังกายและควบคุมอาหาร.";
+            } else {
+                $category = "โรคอ้วน";
+                $advice = "คุณควรปรึกษาแพทย์เพื่อคำแนะนำเพิ่มเติม.";
+            } 
+            echo "<p><strong>BMI:</strong> $bmi ($category)</p>";
+            echo "<p><strong>คำแนะนำ:</strong> $advice</p>";
+        }
+
+    ?>
 </body>
 </html>
